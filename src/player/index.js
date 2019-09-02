@@ -1,3 +1,5 @@
+// TODO: 播放按钮
+
 import extend from './extend.js'
 
 function Player(opts) {
