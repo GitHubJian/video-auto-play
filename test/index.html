@@ -1,0 +1,112 @@
+<html>
+  <head>
+    <meta name="referrer" content="always" />
+    <meta name="referrer" content="always" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no"
+    />
+    <meta name="format-detection" content="telephone=no" />
+    <link rel="stylesheet" href="/assets/css/reset.css" />
+    <link rel="stylesheet" href="/assets/css/index.css" />
+  </head>
+
+  <body>
+    <div id="scene">
+      <div id="waterfall"></div>
+      <div id="player"></div>
+      <div id="loading"></div>
+    </div>
+
+    <script type="module">
+      import Loading from '/src/loading/index.js'
+      import WaterFall from '/src/waterfall/index.js'
+      import Player from '/src/player/index.js'
+      import History from '/src/history/index.js'
+
+      var list = []
+
+      for (var i = 0; i < 10; i++) {
+        list[i] = `/assets/images/${i + 1}.jpg`
+      }
+
+      var loading = new Loading()
+
+      var wf = new WaterFall({
+        col: 2,
+        gapWidth: 5,
+        gapHeight: 5,
+        onClickListener: function() {
+          loading.createLoading()
+
+          setTimeout(function() {
+            loading.openLoading(function() {
+              wf.visible(false)
+              player.visible(true)
+              player.createVideo({
+                src: '/assets/video/timg.mp4',
+                poster: '/assets/video/timg.jpeg'
+              })
+
+              History.addHistory('http://127.0.0.1:5500/test/player.html')
+            })
+          }, 4e2)
+        }
+      })
+
+      var player = new Player()
+
+      loading.openLoading(function() {
+        wf.fetch(list)
+      })
+
+      window.onpopstate = function(event) {
+        if (document.location.href.indexOf('index.html')) {
+          player.destroy()
+
+          wf.visible(true)
+        }
+      }
+    </script>
+
+    <!-- <script>
+      var $el = document.getElementById('xxx')
+
+      // setTimeout(function() {
+      //   $el.className += ' sfa-view-open'
+
+      //   setTimeout(function() {
+      //     createVideo()
+      //   }, 1e3)
+      // }, 1e3)
+
+      function createVideo() {
+        var video = document.createElement('video')
+        var attrs = {
+          class: 'b-player-video',
+          src:
+            '//vdse.bdstatic.com//c3bb02f1c735b2f4bc9ea43652935bf5.mp4?authorization=bce-auth-v1%2F40f207e648424f47b2e3dfbb1014b1a5%2F2019-08-25T19%3A40%3A56Z%2F-1%2Fhost%2F711902447255c04918d7422064390a3bec1b2e10192017b7d3da6a6728310842',
+          type: 'video/mp4',
+          poster:
+            'https://ss0.bdstatic.com/9bA1vGfa2gU2pMbfm9GUKT-w/timg?wisealaddin&amp;size=f994_1766&amp;quality=100&amp;sec=1567404635&amp;di=17c02768ee81523731fd7cabfeea03c3&amp;src=http%3A%2F%2Fvdgif.bdstatic.com%3A80%2F%2F1520cc0d096db5e3cb51422fca255c3a%3Fauthorization%3Dbce-auth-v1%252F40f207e648424f47b2e3dfbb1014b1a5%252F2019-05-27T00%253A02%253A10Z%252F30%252F%252Fe568a38d45b703bf4b273872c823e3c345af902c0e74435f9e10d33dd4b785aa',
+          preload: 'none',
+          height: '100%',
+          autoplay: 'true',
+          'webkit-playsinline': 'true',
+          playsinline: 'true',
+          'x-webkit-airplay': 'true',
+          't7-video-player-type': 'inline',
+          loop: ''
+        }
+
+        for (var name in attrs) {
+          Object.prototype.hasOwnProperty.call(attrs, name) &&
+            video.setAttribute(name, attrs[name])
+        }
+        debugger
+        document.getElementById('abc').appendChild(video)
+      }
+    </script> -->
+  </body>
+</html>

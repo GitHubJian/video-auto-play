@@ -1,0 +1,33 @@
+<html>
+  <head>
+    <meta name="referrer" content="always" />
+    <meta name="referrer" content="always" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no"
+    />
+    <meta name="format-detection" content="telephone=no" />
+    <link rel="stylesheet" href="/assets/css/reset.css" />
+    <link rel="stylesheet" href="/assets/css/index.css" />
+  </head>
+
+  <body>
+    <div id="scene">
+      <div id="player"></div>
+    </div>
+
+    <script type="module">
+      import Player from '/src/player/index.js'
+
+      var player = new Player()
+
+      player.visible(true)
+
+      player.createVideo({
+        src: '/assets/video/timg.mp4',
+        poster: '/assets/video/timg.jpeg'
+      })
+    </script>
+  </body>
+</html>
